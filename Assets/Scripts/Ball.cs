@@ -15,6 +15,8 @@ public class Ball : MonoBehaviour
     Vector2 _velocity;
     BoxCollider2D _collider;
 	Vector2 _startPoint;
+	AudioSource _regBounceSound;
+	AudioSource _paddleBounceSound;
 
 	private void Awake()
 	{
@@ -22,6 +24,10 @@ public class Ball : MonoBehaviour
         _collider = GetComponent<BoxCollider2D>();
         _rigidBody.freezeRotation = true;
 		_startPoint = transform.position;
+
+		var aSources = GetComponents<AudioSource>();
+		_regBounceSound = aSources[0];
+		_paddleBounceSound = aSources[1];
 
     }
 
@@ -56,6 +62,7 @@ public class Ball : MonoBehaviour
 		CheckForKillbox(collision);
 
 		RaycastReflect();
+		PlayBounceSound(collision);
         //AddPaddleForce(collision);
 
     }
@@ -143,7 +150,20 @@ public class Ball : MonoBehaviour
         }
     }
 
+	private void PlayBounceSound(Collision2D collision)
+	{
+		if( collision.gameObject.CompareTag("Paddle"))
+		{
+			_paddleBounceSound.Play();
+		}
+		else
+		{
+			_regBounceSound.Play();
+		}
+	}
+
 	//diabled for now
+	//maybe try claculaing a vector based the origin of the paddle to the origion of the ball
 	private void AddPaddleForce(Collision2D collision)
 	{
 		if (collision.gameObject.tag == "Paddle")
@@ -154,14 +174,19 @@ public class Ball : MonoBehaviour
 		}
 	}
 
-	private void CheckForKillbox(Collision2D hit)
+	private void CheckForKillbox(Collision2D collision)
 	{
-		if (hit.gameObject.CompareTag("Killbox"))
+		if (collision.gameObject.CompareTag("Killbox"))
 		{
 			//CheckForLives()
-			
-			Destroy(gameObject);
+
+			Die();
 		}
+	}
+
+	private void Die()
+	{
+		Destroy(gameObject);
 	}
 
 	private void CheckForLives()

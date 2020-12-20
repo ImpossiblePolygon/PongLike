@@ -16,7 +16,12 @@ public class Block : MonoBehaviour
         
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+        Destroy(gameObject);
+    }
+
+	private void OnCollisionExit2D(Collision2D collision)
     {
 
         Destroy(gameObject);
