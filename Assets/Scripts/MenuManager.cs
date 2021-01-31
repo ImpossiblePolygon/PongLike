@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] string _playSolo;
-	[SerializeField] string _playVersus;
+    [SerializeField] string _sceneForButton1;
+	[SerializeField] string _sceneForButton2;
 	
-	public void PlaySolo ()
+	public void Button1()
 	{
-		SceneManager.LoadScene(_playSolo);
+		SceneManager.LoadScene(_sceneForButton1);
 	}
 
-	public void PlayVersus()
+	public void Button2()
 	{
-		SceneManager.LoadScene(_playVersus);
+		SceneManager.LoadScene(_sceneForButton2);
 	}
 
 	public void QuitGame()

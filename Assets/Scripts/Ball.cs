@@ -34,7 +34,8 @@ public class Ball : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        _rigidBody.gravityScale = 0;
+		
+		_rigidBody.gravityScale = 0;
         SetRandomDirection();
 
     }
@@ -53,8 +54,11 @@ public class Ball : MonoBehaviour
 
 	void SetRandomDirection()
 	{
-        _velocity = new Vector2(Random.Range(-1f, 1f) * _speed, Random.Range(-1f, 1f) * _speed);
-        _rigidBody.velocity = _velocity;
+		float x = Random.Range(0, 2) == 0 ? -1 : 1;
+		float y = Random.Range(0, 2) == 0 ? -1 : 1;
+		_velocity = new Vector2(_speed * x, _speed * y);
+		//_velocity = new Vector2(Random.Range(-1f, 1f) * _speed, Random.Range(-1f, 1f) * _speed);
+		_rigidBody.velocity = _velocity;
     }
 
 	private void OnCollisionEnter2D(Collision2D collision)
@@ -184,14 +188,11 @@ public class Ball : MonoBehaviour
 		}
 	}
 
-	private void Die()
+	public void Die()
 	{
-		Destroy(gameObject);
-	}
-
-	private void CheckForLives()
-	{
-		//Impliment
+		//Destroy(gameObject);
+		// try something else involving instantiation?? maybe use a ball spawner????
+		Reset();
 	}
 
 
